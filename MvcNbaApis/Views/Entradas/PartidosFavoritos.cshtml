@@ -1,0 +1,49 @@
+﻿@model List<MvcNbaApis.Models.ModelVistaProximosPartidos>
+
+@{
+    ViewData["Title"] = "Partidos en Carrito";
+    var usuario = Context.Session.GetObject<Usuario>("CurrentUser");
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<div class="text-center mb-4">
+    <a asp-controller="Entradas" asp-action="VistaReservaEntradas" class="btn btn-outline-success">Lista de partidos</a>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Equipo Local</th>
+                    <th>Equipo Visitante</th>
+                    <th>Fecha del partido</th>
+                    <th>Precio del partido</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var partido in Model)
+                {
+                    <tr>
+                        <td>@partido.EquipoLocal</td>
+                        <td>@partido.EquipoVisitante</td>
+                        <td>@partido.Fecha.ToShortDateString()</td>
+                        <td>@partido.PrecioEntrada €</td>
+                        <td>
+                            <a asp-controller="Entradas" asp-action="PartidosFavoritos" asp-route-ideliminar="@partido.IdPartido" class="btn btn-danger">Eliminar</a>
+                            <a asp-controller="Entradas" asp-action="ReservarEntrada" asp-route-partidoid="@partido.IdPartido" asp-route-usuarioid="@usuario.IdUsuario" class="btn btn-success">Reservar Entrada</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <h2 class="text-center">@ViewData["MENSAJE"]</h2>
+}
+<div style="margin-top:660px"> </div>

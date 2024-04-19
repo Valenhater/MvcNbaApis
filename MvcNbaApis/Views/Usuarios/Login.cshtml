@@ -1,0 +1,126 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<style>
+    /* Estilos para el contenedor principal */
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin-top: -50px; /* Ajuste para subir el formulario */
+    }
+
+    .login-form {
+        width: 100%;
+        max-width: 400px;
+        padding: 40px;
+        border-radius: 10px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-form h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #333333;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .login-form .form-group {
+        margin-bottom: 20px;
+    }
+
+    .login-form .control-label {
+        font-size: 16px;
+        color: #333333;
+        font-weight: bold;
+    }
+
+    .login-form .form-control {
+        border: 2px solid #dddddd;
+        border-radius: 5px;
+        padding: 12px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+    }
+
+    .login-form .form-control:focus {
+        border-color: #4CAF50;
+        outline: none;
+    }
+
+    .login-form .btn-primary {
+        width: 100%;
+        padding: 12px;
+        font-weight: bold;
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .login-form .btn-primary:hover {
+        background-color: #45a049;
+    }
+
+    .login-form .alert-danger {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #f44336;
+        color: white;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
+    /* Estilos para el enlace al registro */
+    .register-link {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .register-link a {
+        color: #4CAF50;
+        font-weight: bold;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    .register-link a:hover {
+        color: #45a049;
+    }
+</style>
+
+<body style="background-color: #f2f2f2;">
+    <div class="login-container">
+        <div class="login-form">
+            <h2>Login</h2>
+            <form asp-action="Login" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label name="username" class="control-label">Nombre de usuario</label>
+                    <input name="username" class="form-control" placeholder="Introduce tu nombre de usuario" />
+                </div>
+                <div class="form-group">
+                    <label name="password" class="control-label">Contraseña</label>
+                    <input name="password" class="form-control" type="password" placeholder="Introduce tu contraseña" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Iniciar Sesión" class="btn btn-primary" />
+                </div>
+                @if (ViewData["Mensaje"] != null)
+                {
+                    <div class="alert alert-danger">
+                        @ViewData["Mensaje"]
+                    </div>
+                }
+            </form>
+            <div class="register-link">
+                <span>¿No tienes cuenta? Regístrate <a asp-controller="Usuarios" asp-action="Registro">aquí</a>.</span>
+            </div>
+        </div>
+    </div>
+</body>

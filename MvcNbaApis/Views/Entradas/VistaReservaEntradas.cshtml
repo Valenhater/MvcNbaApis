@@ -1,0 +1,147 @@
+﻿@model List<MvcNbaApis.Models.ModelVistaProximosPartidos>
+@using Newtonsoft.Json
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Reservar Entradas";
+}
+
+@{
+    var currentUser = HttpContextAccessor.HttpContext.Session.GetObject<Usuario>("CurrentUser");
+}
+
+<style>
+    body {
+        background-image: url("/varios/nbaplay.webp");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        color: #333; /* Cambio de color del texto general a negro para mejorar la legibilidad */
+    }
+
+    .login-message {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+        border-radius: 5px;
+        padding: 10px;
+    }
+
+        .login-message a {
+            color: #721c24;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+    /* Centrar verticalmente */
+    .vertical-center {
+        display: flex;
+        align-items: center;
+    }
+
+    .container {
+        margin-top: 50px;
+        margin-bottom: 50px; /* Aumentamos el espacio entre los partidos y el footer */
+    }
+
+    .card {
+        margin-bottom: 30px;
+    }
+
+    .card-img-top {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .card-body {
+        text-align: center;
+    }
+
+    .card-title {
+        font-size: 36px; /* Aumentamos el tamaño del título */
+        font-weight: bold;
+        margin-top: 50px; /* Aumentamos el espacio entre el título y la imagen */
+        color: #fff; /* Cambiamos el color del título a blanco */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Añadimos sombra al texto */
+    }
+
+    .team-name {
+        color: #333; /* Cambiamos el color del nombre del equipo dentro de las cards */
+        font-weight: bold;
+        font-size: 24px; /* Ajustamos el tamaño del texto */
+    }
+
+    .vs {
+        color: #333; /* Cambiamos el color del "vs" dentro de las cards */
+        font-weight: bold;
+        font-size: 24px; /* Ajustamos el tamaño del texto */
+    }
+
+    .btn-reservar {
+        background-color: forestgreen;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        padding: 10px 20px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn-reservar2 {
+        background-color: rebeccapurple;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        padding: 10px 20px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn-reservar:hover {
+        background-color: lightgreen;
+    }
+
+    .btn-reservar2:hover {
+        background-color: mediumpurple;
+    }
+
+</style>
+
+<div class="container">
+    <h1 class="text-center card-title" style="margin-bottom: 30px;">Próximos Partidos</h1> 
+    <div class="row">
+        @foreach (var partido in Model)
+        {
+            <div class="col-md-4">
+                <div class="card">
+                    <img class="card-img-top" src="@HelperPathProvider.MapUrlPath(@partido.ImagenPartido, Folders.Partidos)" alt="Imagen del Partido" />
+                    <div class="card-body">
+                        <h5 class="card-title"><span class="team-name">@partido.EquipoLocal</span> <span class="vs">vs</span> <span class="team-name">@partido.EquipoVisitante</span></h5> <!-- Agregamos clase team-name y vs -->
+                        @if (Context.Session.GetObject<Usuario>("CurrentUser") != null)
+                        {
+                            <a asp-controller="Entradas" asp-action="ReservarEntrada" asp-route-partidoid="@partido.IdPartido" asp-route-usuarioid="@currentUser.IdUsuario" class="btn btn-reservar">Reservar Entrada</a>
+
+                            @if (Model.Any(p => Context.Session.GetObject<List<int>>("PARTIDOS")?.Contains(partido.IdPartido) ?? false))
+                            {
+                                <img src="~/varios/guardado.png" style="width: 35px; height: 35px;" />
+                            }
+                            else
+                            {
+                                <a asp-controller="Entradas" asp-action="VistaReservaEntradas" asp-route-idPartido="@partido.IdPartido" class="btn btn-reservar2">Guardar en Carrito</a>
+                            }
+                        }
+                        else
+                        {
+                            <div class="text-center mt-3 login-message vertical-center">
+                                <span>Debes <a asp-controller="Usuarios" asp-action="Login">iniciar sesión</a> para reservar o agregar al carrito.</span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

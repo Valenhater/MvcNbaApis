@@ -1,0 +1,116 @@
+﻿@{
+    ViewData["Title"] = "Registro";
+}
+
+<style>
+     body{
+         background-color: #f2f2f2;
+    }
+    /* Estilos para el formulario de registro */
+    .registration-form {
+        width: 100%;
+        max-width: 400px;
+        margin: 20px auto; /* Margen superior añadido */
+        padding: 40px;
+        border-radius: 10px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: -50px; /* Ajuste para subir el formulario */
+    }
+
+    .registration-form h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #333333;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .registration-form .form-group {
+        margin-bottom: 20px;
+    }
+
+    .registration-form .control-label {
+        font-size: 16px;
+        color: #333333;
+        font-weight: bold;
+    }
+
+    .registration-form .form-control {
+        border: 2px solid #dddddd;
+        border-radius: 5px;
+        padding: 12px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+    }
+
+    .registration-form .form-control:focus {
+        border-color: #4CAF50;
+        outline: none;
+    }
+
+    .registration-form .btn-primary {
+        width: 100%;
+        padding: 12px;
+        font-weight: bold;
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .registration-form .btn-primary:hover {
+        background-color: #45a049;
+    }
+
+    .registration-form .alert-danger {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #f44336;
+        color: white;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+</style>
+<div style="margin-top:70px"></div>
+<div class="registration-form">
+    <h2>Registro</h2>
+    <form asp-action="Registro" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label name="nombre" class="control-label">Nombre</label>
+            <input name="nombre" class="form-control" placeholder="Introduce tu nombre" />
+        </div>
+        <div class="form-group">
+            <label name="email" class="control-label">Email</label>
+            <input name="email" class="form-control" type="email" placeholder="Introduce tu email" />
+        </div>
+        <div class="form-group">
+            <label name="password" class="control-label">Contraseña</label>
+            <input name="password" class="form-control" type="password" placeholder="Introduce tu contraseña" />
+        </div>
+        <div class="form-group">
+            <label name="confirmPassword" class="control-label">Confirmar Contraseña</label>
+            <input name="confirmPassword" class="form-control" type="password" placeholder="Confirma tu contraseña" />
+        </div>
+        <div class="form-group">
+            <label name="nombreCompleto" class="control-label">Nombre Completo</label>
+            <input name="nombreCompleto" class="form-control" type="text" placeholder="Nombre Completo" />
+        </div>
+        <div class="form-group">
+            <label name="direccion" class="control-label">Direccion</label>
+            <input name="direccion" class="form-control" type="text" placeholder="Direccion" />
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Registrar" class="btn btn-primary" />
+        </div>
+        @if (ViewData["Mensaje"] != null)
+        {
+            <div class="alert alert-danger">
+                @ViewData["Mensaje"]
+            </div>
+        }
+    </form>
+</div>
