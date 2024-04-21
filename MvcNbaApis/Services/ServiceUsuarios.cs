@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using ApiNba.Models;
 using Microsoft.Extensions.Configuration;
 using MvcNbaApis.Models;
 
@@ -70,14 +69,14 @@ namespace MvcNbaApis.Services
             return await CallApiAsync<Usuario>(request);
         }
 
-        public async Task<bool> EditarPerfilAsync(string username, Usuario usuario)
+        public async Task<bool> EditarPerfilAsync(string username, Usuario model)
         {
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(UrlApi);
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(header);
-                HttpResponseMessage response = await client.PutAsJsonAsync($"api/auth/{username}", usuario);
+                HttpResponseMessage response = await client.PutAsJsonAsync($"api/auth/{username}", model);
                 return response.IsSuccessStatusCode;
             }
         }

@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
-using ApiNba.Models;
+﻿using System.Reflection;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MvcNbaApis.Extensions;
 using MvcNbaApis.Models;
 using MvcNbaApis.Services;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MvcNbaApis.Controllers
 {
@@ -29,7 +31,9 @@ namespace MvcNbaApis.Controllers
                 if (loginSuccessful)
                 {
                     // Redirigir a la página principal o a otra página después del inicio de sesión
-                    return RedirectToAction("Index", "Home");
+                    Usuario user = await this.serviceUsuarios.VerPerfilAsync(model.UserName);
+                    HttpContext.Session.SetObject("CurrentUser", user);
+                    return RedirectToAction("PartidosJugados", "Nba");
                 }
                 else
                 {
@@ -47,20 +51,19 @@ namespace MvcNbaApis.Controllers
         [HttpPost]
         public async Task<IActionResult> Registro(RegisterModel model)
         {
-            if (ModelState.IsValid)
-            {
-                bool registrationSuccessful = await serviceUsuarios.RegisterAsync(model);
+          bool registrationSuccessful = await serviceUsuarios.RegisterAsync(model);
                 if (registrationSuccessful)
                 {
-                    // Redirigir a la página de inicio de sesión después del registro exitoso
-                    return RedirectToAction("Login");
+                    Usuario user = await this.serviceUsuarios.VerPerfilAsync(model.UserName);
+                    HttpContext.Session.SetObject("CurrentUser", user);
+                    return RedirectToAction("PartidosJugados", "Nba");
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Error al registrar el usuario. Inténtelo de nuevo más tarde.");
                 }
-            }
-            return View(model);
+            
+                return View(model);
         }
 
         public async Task<IActionResult> VerPerfil(string username)
@@ -84,18 +87,16 @@ namespace MvcNbaApis.Controllers
         [HttpPost]
         public async Task<IActionResult> EditarPerfil(string username, Usuario usuario)
         {
-            if (ModelState.IsValid)
+
+            bool editSuccessful = await serviceUsuarios.EditarPerfilAsync(username, usuario);
+            if (editSuccessful)
             {
-                bool editSuccessful = await serviceUsuarios.EditarPerfilAsync(username, usuario);
-                if (editSuccessful)
-                {
-                    // Redirigir a la página de perfil después de la edición exitosa
-                    return RedirectToAction("Perfil", new { username = username });
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Error al editar el perfil. Inténtelo de nuevo más tarde.");
-                }
+                // Redirigir a la página de perfil después de la edición exitosa
+                return RedirectToAction("Perfil", new { username = username });
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Error al editar el perfil. Inténtelo de nuevo más tarde.");
             }
             return View(usuario);
         }
@@ -107,7 +108,7 @@ namespace MvcNbaApis.Controllers
             if (deleteSuccessful)
             {
                 // Redirigir a la página principal o a otra página después de eliminar el usuario
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("PartidosJugados", "Nba");
             }
             else
             {

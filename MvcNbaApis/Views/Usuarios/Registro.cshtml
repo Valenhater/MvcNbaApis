@@ -1,4 +1,6 @@
-﻿@{
+﻿@model RegisterModel
+
+@{
     ViewData["Title"] = "Registro";
 }
 
@@ -79,28 +81,24 @@
     <form asp-action="Registro" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
-            <label name="nombre" class="control-label">Nombre</label>
-            <input name="nombre" class="form-control" placeholder="Introduce tu nombre" />
+            <label name="UserName" class="control-label">Nombre</label>
+            <input name="UserName" class="form-control" placeholder="Introduce tu nombre" />
         </div>
         <div class="form-group">
-            <label name="email" class="control-label">Email</label>
-            <input name="email" class="form-control" type="email" placeholder="Introduce tu email" />
+            <label name="Email" class="control-label">Email</label>
+            <input name="Email" class="form-control" type="email" placeholder="Introduce tu email" />
         </div>
         <div class="form-group">
-            <label name="password" class="control-label">Contraseña</label>
-            <input name="password" class="form-control" type="password" placeholder="Introduce tu contraseña" />
+            <label name="Password" class="control-label">Contraseña</label>
+            <input name="Password" class="form-control" type="password" placeholder="Introduce tu contraseña" />
         </div>
         <div class="form-group">
-            <label name="confirmPassword" class="control-label">Confirmar Contraseña</label>
-            <input name="confirmPassword" class="form-control" type="password" placeholder="Confirma tu contraseña" />
+            <label name="NombreCompleto" class="control-label">Nombre Completo</label>
+            <input name="NombreCompleto" class="form-control" type="text" placeholder="Nombre Completo" />
         </div>
         <div class="form-group">
-            <label name="nombreCompleto" class="control-label">Nombre Completo</label>
-            <input name="nombreCompleto" class="form-control" type="text" placeholder="Nombre Completo" />
-        </div>
-        <div class="form-group">
-            <label name="direccion" class="control-label">Direccion</label>
-            <input name="direccion" class="form-control" type="text" placeholder="Direccion" />
+            <label name="Direccion" class="control-label">Direccion</label>
+            <input name="Direccion" class="form-control" type="text" placeholder="Direccion" />
         </div>
 
         <div class="form-group">

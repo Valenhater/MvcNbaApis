@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MvcNbaApis.Extensions;
+using MvcNbaApis.Models;
 using MvcNbaApis.Services;
 
 namespace MvcNbaApis.Controllers
@@ -16,24 +18,25 @@ namespace MvcNbaApis.Controllers
             var entradas = await this.service.GetEntradasAsync();
             return View(entradas);
         }
-        public async Task<IActionResult> ReservarEntrada(int id)
+        public async Task<IActionResult> ReservarEntrada(int partidoid)
         {
-            var entrada = await this.service.FindEntradaAsync(id);
+            var entrada = await this.service.FindEntradaAsync(partidoid);
+            ViewData["PARTIDOID"] = partidoid;
             return View(entrada);
         }
         [HttpPost]
-        public async Task<IActionResult> ReservarEntrada(int usuarioId, int partidoId, int asiento)
+        public async Task<IActionResult> ReservarEntrada(int usuarioid, int partidoid, int asiento)
         {
-            var reserva = await this.service.ReservarEntradaAsync(usuarioId, partidoId, asiento);
+            var reserva = await this.service.ReservarEntradaAsync(usuarioid, partidoid, asiento);
             if (reserva != null)
             {
                 // La reserva fue exitosa, redireccionar o retornar alguna vista de éxito
-                return RedirectToAction("PartidosFavoritos", new { id = reserva.ReservaId });
+                return RedirectToAction("EntradasReservadas", new { id = reserva.ReservaId });
             }
             else
             {
                 // La reserva no fue exitosa, redireccionar o retornar alguna vista de error
-                return RedirectToAction("EntVistaReservaEntradasradas"); 
+                return RedirectToAction("VistaReservaEntradas"); 
             }
         }
 
@@ -41,13 +44,14 @@ namespace MvcNbaApis.Controllers
         {
             await this.service.DeleteEntradaAsync(id);
             // Redireccionar o retornar alguna vista indicando que la entrada fue eliminada
-            return RedirectToAction("VistaReservaEntradas");
+            return RedirectToAction("EntradasReservadas");
         }
 
-        public async Task<IActionResult> PartidosFavoritos()
+        public async Task<IActionResult> EntradasReservadas(int usuarioid)
         {
-            var entradasReservadas = await this.service.GetEntradasReservadasAsync();
+            var entradasReservadas = await this.service.GetEntradasReservadasAsync(usuarioid);
             return View(entradasReservadas);
         }
+       
     }
 }

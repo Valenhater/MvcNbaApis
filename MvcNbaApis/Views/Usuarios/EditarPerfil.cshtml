@@ -7,14 +7,11 @@
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <form method="post">
-                    <input type="hidden" name="id" value="@Model.IdUsuario" />
-                    <input type="hidden" name="rol" value="@Model.Rol" />
-                    <input type="hidden" name="passwd" value="@Model.Password" />
-
-                    <div class="form-group">
-                        <label for="Nombre">Nombre</label>
-                        <input type="text" name="nombre" value="@Model.Nombre" class="form-control" />
-                    </div>
+                    <input type="hidden" name="IdUsuario" value="@Model.IdUsuario" />
+                    <input type="hidden" name="Rol" value="@Model.Rol" />
+                    <input type="hidden" name="Password" value="@Model.Password" />
+                    <input type="hidden" name="Nombre" value="@Model.Nombre" />
+                    <input type="hidden" name="Salt" value="@Model.Salt" />
 
                     <div class="form-group">
                         <label for="NombreCompleto">Nombre Completo</label>

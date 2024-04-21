@@ -1,4 +1,4 @@
-﻿namespace ApiNba.Models
+﻿namespace MvcNbaApis.Models
 {
     public class RegisterModel
     {

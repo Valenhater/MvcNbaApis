@@ -9,8 +9,6 @@ namespace MvcNbaApis.Models
         public int UsuarioId { get; set; }
         public int PartidoId { get; set; }
         public int Asiento { get; set; }
-        public Usuario Usuario { get; set; }
-        public ProximoPartido Partido { get; set; }
     }
 }
 

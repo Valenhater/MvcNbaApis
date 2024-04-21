@@ -87,8 +87,8 @@
         <div class="row justify-content-center"> <!-- Ajuste para centrar los botones -->
             <div class="col-md-6">
                 <div class="d-flex justify-content-center"> <!-- Ajuste para centrar los botones -->
-                    <a asp-controller="Usuarios" asp-action="EditarPerfil" asp-route-id="@Model.IdUsuario" class="btn btn-primary mx-2">Editar Perfil</a>
-                    <form method="post" asp-controller="Usuarios" asp-action="EliminarPerfil" onsubmit="return confirm('¿Estás seguro de que quieres eliminar tu perfil?');">
+                    <a asp-controller="Usuarios" asp-action="EditarPerfil" asp-route-username="@Model.Nombre" class="btn btn-primary mx-2">Editar Perfil</a>
+                    <form method="post" asp-controller="Usuarios" asp-action="Eliminar" onsubmit="return confirm('¿Estás seguro de que quieres eliminar tu perfil?');">
                         <input type="hidden" name="id" value="@Model.IdUsuario" />
                         <button type="submit" class="btn btn-danger mx-2">Eliminar Cuenta</button>
                     </form>

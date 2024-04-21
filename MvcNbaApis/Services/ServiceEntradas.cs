@@ -41,7 +41,7 @@ namespace MvcNbaApis.Services
         }
         public async Task<ModelVistaProximosPartidos> FindEntradaAsync(int idEntrada)
         {
-            string request = "api/entradas/" + idEntrada;
+            string request = "api/entradas/getentrada/" + idEntrada;
             ModelVistaProximosPartidos data = await this.CallApiAsync<ModelVistaProximosPartidos>(request);
             return data;
         }
@@ -101,10 +101,10 @@ namespace MvcNbaApis.Services
                 }
             }
         }
-        public async Task<List<ReservaEntrada>> GetEntradasReservadasAsync()
+        public async Task<List<VistaEntradasReservadas>> GetEntradasReservadasAsync(int idusuario)
         {
-            string request = "api/entradas/getentradasreservadas";
-            List<ReservaEntrada> data = await this.CallApiAsync<List<ReservaEntrada>>(request);
+            string request = "api/entradas/getentradasreservadas/" + idusuario;
+            List<VistaEntradasReservadas> data = await this.CallApiAsync<List<VistaEntradasReservadas>>(request);
             return data;
         }
     }

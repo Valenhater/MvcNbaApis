@@ -104,7 +104,7 @@
 
             <form class="reservation-form" method="post">
                 <input type="hidden" name="usuarioid" value="@usuario.IdUsuario" />
-                <input type="hidden" name="partidoid" value="@partidoid" />
+                <input type="hidden" name="partidoid" value="@ViewData["PARTIDOID"]" />
 
                 <label for="asiento">Selecciona tu asiento:</label>
                 <select name="asiento" id="asiento">
