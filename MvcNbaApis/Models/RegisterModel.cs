@@ -1,4 +1,6 @@
-﻿namespace MvcNbaApis.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MvcNbaApis.Models
 {
     public class RegisterModel
     {

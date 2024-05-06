@@ -13,8 +13,15 @@ namespace MvcNbaApis.Controllers
             this.service = service;
         }
 
-        public async Task<IActionResult> VistaReservaEntradas()
+        public async Task<IActionResult> VistaReservaEntradas(int? idPartido)
         {
+            if (idPartido != null)
+            {
+                List<int> partidosList = HttpContext.Session.GetObject<List<int>>("PARTIDOS") ?? new List<int>();
+                partidosList.Add(idPartido.Value);
+                HttpContext.Session.SetObject("PARTIDOS", partidosList);
+                ViewData["MENSAJE"] = "Partido almacenado correctamente";
+            }
             var entradas = await this.service.GetEntradasAsync();
             return View(entradas);
         }
@@ -27,16 +34,17 @@ namespace MvcNbaApis.Controllers
         [HttpPost]
         public async Task<IActionResult> ReservarEntrada(int usuarioid, int partidoid, int asiento)
         {
+            // Lógica para reservar la entrada
             var reserva = await this.service.ReservarEntradaAsync(usuarioid, partidoid, asiento);
             if (reserva != null)
             {
-                // La reserva fue exitosa, redireccionar o retornar alguna vista de éxito
-                return RedirectToAction("EntradasReservadas", new { id = reserva.ReservaId });
+                // La reserva fue exitosa, redireccionar a la página de entradas reservadas
+                return RedirectToAction("EntradasReservadas", new { usuarioid = usuarioid });
             }
             else
             {
-                // La reserva no fue exitosa, redireccionar o retornar alguna vista de error
-                return RedirectToAction("VistaReservaEntradas"); 
+                // La reserva no fue exitosa, redireccionar a la vista de reserva de entradas
+                return RedirectToAction("VistaReservaEntradas", new { partidoid = partidoid });
             }
         }
 
@@ -52,6 +60,21 @@ namespace MvcNbaApis.Controllers
             var entradasReservadas = await this.service.GetEntradasReservadasAsync(usuarioid);
             return View(entradasReservadas);
         }
-       
+        public async Task<IActionResult> PartidosFavoritos(int? ideliminar)
+        {
+            List<int> idsPartidos = HttpContext.Session.GetObject<List<int>>("PARTIDOS");
+            if (idsPartidos != null)
+            {
+                if (ideliminar != null)
+                {
+                    idsPartidos.Remove(ideliminar.Value);
+                    HttpContext.Session.SetObject("PARTIDOS", idsPartidos);
+                }
+                List<ModelVistaProximosPartidos> partidos = await this.service.GetFavoritosAsync(idsPartidos);
+                return View(partidos);
+            }
+            ViewData["MENSAJE"] = "No hay partidos almacenados";
+            return View();
+        }
     }
 }

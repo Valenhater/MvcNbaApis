@@ -3,7 +3,7 @@
 <style>
     /* Estilos generales */
     body {
-        background-image: url("@HelperPathProvider.MapUrlPath(Model.ImagenFondo, Folders.Fondos)");
+        background-image: url("https://storageaccountnba.blob.core.windows.net/fondoequipos/@Model.ImagenFondo");
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
@@ -74,7 +74,7 @@
                 <div class="detalle-info">
                     <strong>Fundación:</strong> @Model.Fundacion.ToShortDateString()
                 </div>
-                <img class="detalle-image" src="@HelperPathProvider.MapUrlPath(Model.Imagen, Folders.Equipos)" alt="@Model.Nombre" />
+                <img class="detalle-image" src="https://storageaccountnba.blob.core.windows.net/equipos/@Model.Imagen" alt="@Model.Nombre" />
                 <a asp-controller="Nba" asp-action="Index" class="btn-back">Volver al Listado</a>
             </div>
         </div>

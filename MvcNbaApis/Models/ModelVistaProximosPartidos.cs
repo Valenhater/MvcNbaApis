@@ -5,6 +5,8 @@ namespace MvcNbaApis.Models
 {
     public class ModelVistaProximosPartidos
     {
+        [Key]
+        [Column("PARTIDOID")]
         public int IdPartido { get; set; }
         public string EquipoLocal { get; set; }
         public string EquipoVisitante { get; set; }

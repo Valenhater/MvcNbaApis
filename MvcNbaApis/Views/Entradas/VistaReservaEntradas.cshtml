@@ -111,13 +111,13 @@
 </style>
 
 <div class="container">
-    <h1 class="text-center card-title" style="margin-bottom: 30px;">Próximos Partidos</h1> 
+    <h1 class="text-center card-title" style="margin-bottom: 30px;">Próximos Partidos</h1>
     <div class="row">
         @foreach (var partido in Model)
         {
             <div class="col-md-4">
                 <div class="card">
-                    <img class="card-img-top" src="@HelperPathProvider.MapUrlPath(@partido.ImagenPartido, Folders.Partidos)" alt="Imagen del Partido" />
+                    <img class="card-img-top" src="https://storageaccountnba.blob.core.windows.net/partidos/@partido.ImagenPartido" alt="Imagen del Partido" />
                     <div class="card-body">
                         <h5 class="card-title"><span class="team-name">@partido.EquipoLocal</span> <span class="vs">vs</span> <span class="team-name">@partido.EquipoVisitante</span></h5> <!-- Agregamos clase team-name y vs -->
                         @if (Context.Session.GetObject<Usuario>("CurrentUser") != null)
@@ -130,7 +130,7 @@
                             }
                             else
                             {
-                                <a asp-controller="Entradas" asp-action="VistaReservaEntradas" asp-route-partidoid="@partido.IdPartido" class="btn btn-reservar2">Guardar en Carrito</a>
+                                <a asp-controller="Entradas" asp-action="VistaReservaEntradas" asp-route-idPartido="@partido.IdPartido" class="btn btn-reservar2">Guardar en Carrito</a>
                             }
                         }
                         else

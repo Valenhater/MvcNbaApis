@@ -95,7 +95,7 @@
 
 <div class="card-container">
     <div class="card">
-        <img class="card-img-top" src="@HelperPathProvider.MapUrlPath(@Model.ImagenPartido, Folders.Partidos)" alt="Imagen del Partido" />
+        <img class="card-img-top" src="https://storageaccountnba.blob.core.windows.net/partidos/@Model.ImagenPartido" alt="Imagen del Partido" />
         <div class="card-body">
             <h5 class="card-title">@Model.EquipoLocal vs @Model.EquipoVisitante</h5>
             <p class="card-text">Fecha y Hora: @Model.Fecha.ToShortDateString() - @Model.Fecha.ToShortTimeString()</p>

@@ -77,7 +77,7 @@
                 <tr>
                     <td>@jugador.Nombre</td>
                     <td>@jugador.Posicion</td>
-                    <td><img src="@HelperPathProvider.MapUrlPath(jugador.Imagen, Folders.Jugadores)" class="player-image" /></td>
+                <td><img src="https://storageaccountnba.blob.core.windows.net/jugadores/@jugador.Imagen" class="player-image" /></td>
                     <td><a asp-controller="Jugadores" asp-action="DetalleJugador" asp-route-id="@jugador.IdJugador" class="details-button">Ver detalles</a></td>
                 </tr>
             }

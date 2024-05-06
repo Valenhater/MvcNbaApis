@@ -45,7 +45,7 @@
             {
                 <div class="col-md-4">
                     <a asp-controller="Nba" asp-action="Detalle" asp-route-id="@equipo.IdEquipo" class="team-link">
-                        <img class="team-image" src="@HelperPathProvider.MapUrlPath(equipo.Imagen, Folders.Equipos)" alt="@equipo.Nombre" />
+                        <img class="team-image" src="https://storageaccountnba.blob.core.windows.net/equipos/@equipo.Imagen" alt="@equipo.Nombre" />
                     </a>
                 </div>
             }

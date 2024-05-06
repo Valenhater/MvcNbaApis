@@ -5,7 +5,6 @@ namespace MvcNbaApis.Models
 {
     public class AsientoReservado
     {
-
         public int Id { get; set; }
         public int PartidoId { get; set; }
         public int Asiento { get; set; }

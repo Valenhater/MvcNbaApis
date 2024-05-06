@@ -1,9 +1,24 @@
+using Azure.Security.KeyVault.Secrets;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Azure;
+using MvcNbaApis.Data;
 using MvcNbaApis.Helpers;
 using MvcNbaApis.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddAzureClients(factory =>
+{
+    factory.AddSecretClient
+    (builder.Configuration.GetSection("KeyVault"));
+});
+
+SecretClient secretClient = builder.Services.BuildServiceProvider().GetService<SecretClient>();
+KeyVaultSecret secret = await secretClient.GetSecretAsync("SecretNba"); //Aqui ponemos el nombre del secret
+string connectionString = secret.Value;
+
 builder.Services.AddTransient<ServicePartidos>();
 builder.Services.AddTransient<ServiceJugadores>();
 builder.Services.AddTransient<ServiceEntradas>();
@@ -17,6 +32,8 @@ builder.Services.AddSingleton<HelperCryptography>();
 
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<NbaContext>(options => options.UseSqlServer(connectionString));
+
 
 builder.Services.AddSession();
 var app = builder.Build();
